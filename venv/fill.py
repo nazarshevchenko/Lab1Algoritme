@@ -10,13 +10,13 @@ def name():
     return ''.join(Name)
 
 def memory():
-    return random.randint(1000, 10000000)
+    return random.randint(1000, 100000)
 
 def zoom():
     return random.randint(1, 200)
 
 arr = []
-for i in range(10000):
+for i in range(5000):
     arr.append([name(), memory(), zoom()])
 
 arr = numpy.array(arr)

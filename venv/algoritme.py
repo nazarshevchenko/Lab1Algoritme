@@ -3,19 +3,25 @@ import numpy
 
 ### INSERT ###
 # сортування по спаданню, перевернення масиву
+
+
 def Insert(sort):
+    exchange = 0
+    comparison = 0
     for i in range(1, len(sort)):
 
         number = sort[i].copy()
 
         for j in range(i - 1, -1, -1):
+            comparison += 1
             if number[1] >= sort[j][1]:
                 break
-
+            
+            exchange += 1
             sort[j + 1] = sort[j].copy()
             sort[j] = number
     sort = sort[::-1]
-    return sort
+    return sort, exchange, comparison
 
 
 ### INSERT ###
@@ -37,7 +43,12 @@ def Insert_t(sort):
 ### Merge ###
 # сортування по зростанню
 
+
 def Merge(mass):
+
+    exchange = 0
+    comparison = 0
+
     if len(mass) > 1:
         left = []
         right = []
@@ -48,14 +59,17 @@ def Merge(mass):
         for i in range(len(mass) // 2, len(mass)):
             right.append(mass[i])
 
-        left = Merge(left)
-        right = Merge(right)
+        left, excl, coml = Merge(left)
+        right, excr, comr = Merge(right)
+
 
         arr = []
 
         while True:
             if len(left) > 0 and len(right) > 0:
+                comparison += 1
                 if left[0][2] > right[0][2]:
+                    exchange += 1
                     arr.append(right[0])
                     del right[0]
                 else:
@@ -72,5 +86,9 @@ def Merge(mass):
 
             else:
                 break
-        return arr
-    return mass
+        
+        exchange += excl + excr
+        comparison += coml + comr
+        return arr, exchange, comparison
+
+    return mass, exchange, comparison 
